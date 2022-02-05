@@ -36,23 +36,51 @@ void replaceSpaceWithPattern(char str[], char pattern[], int strEndIndex, int en
     }
 }
 
-int main() {
-    char str[] = "Mr John Smith    ";
-    char pattern[] = "%20";
-    
-    int strLength = sizeof(str) / sizeof(str[0]);
-    int endIndex = strLength - 2; // - 1, would point to the null character
-    
-    int patternLength = (sizeof(pattern) / sizeof(pattern[0])) - 1;
 
-    int strEndIndex = getStringEndIndex(str, strLength);
-    replaceSpaceWithPattern(str, pattern, strEndIndex, endIndex, patternLength);
+string urlify(char str[], int strLength) {
+    // String which will have the urlified output
+    string urlifiedString;
 
-    int i = 0;
-    while(i <= endIndex) {
-        cout<<str[i]<<endl;
-        i += 1;
+    int strEndIndex = 0;
+    int index = strLength - 1;
+
+    while(index >= 0 and str[index] == 32) {
+        index -= 1;
     }
+    strEndIndex = index;
+
+    
+    for(int i = 0; i <= strEndIndex; i++) {
+        if(str[i] == 32) {
+            urlifiedString += '%';
+            urlifiedString += '2';
+            urlifiedString += '0';
+        } else {
+            urlifiedString += str[i];
+        }
+    }
+    return urlifiedString;
+}
+
+int main() {
+    char str[] = "Mr John Smith       ";
+    char pattern[] = "%20";
+    int strLength = sizeof(str) / sizeof(str[0]) - 1;
+    
+    cout<<urlify(str, strLength)<<endl;;
+    
+    // int endIndex = strLength - 2; // - 1, would point to the null character
+    
+    // int patternLength = (sizeof(pattern) / sizeof(pattern[0])) - 1;
+
+    // int strEndIndex = getStringEndIndex(str, strLength);
+    // replaceSpaceWithPattern(str, pattern, strEndIndex, endIndex, patternLength);
+
+    // int i = 0;
+    // while(i <= endIndex) {
+    //     cout<<str[i]<<endl;
+    //     i += 1;
+    // }
     
     return 0;
 }
